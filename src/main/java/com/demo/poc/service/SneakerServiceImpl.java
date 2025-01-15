@@ -7,6 +7,7 @@ import com.demo.poc.entity.SneakerEntity;
 import com.demo.poc.mapper.SneakerMapper;
 import com.google.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 public class SneakerServiceImpl implements SneakerService {
 
@@ -40,5 +41,13 @@ public class SneakerServiceImpl implements SneakerService {
   public void save(SneakerRequestDto sneakerRequest) {
     SneakerEntity entity = SneakerMapper.toEntity(sneakerRequest);
     sneakerDao.save(entity);
+  }
+
+  @Override
+  public List<SneakerResponseDto> findByQueryParam(Map<String, String> queryParam) {
+    return findAll()
+        .stream()
+        .filter(sneaker -> queryParam.containsKey("provider") ? queryParam.get("provider").equals(sneaker.getProvider()) : true)
+        .toList();
   }
 }

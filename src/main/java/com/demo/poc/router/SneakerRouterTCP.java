@@ -2,6 +2,7 @@ package com.demo.poc.router;
 
 import static com.demo.poc.commons.tcp.TCPResourceHelper.closeResource;
 
+import com.demo.poc.commons.utils.RoutingUtils;
 import com.demo.poc.dto.SneakerRequestDto;
 import com.demo.poc.dto.SneakerResponseDto;
 import com.demo.poc.service.SneakerService;
@@ -11,6 +12,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 public class SneakerRouterTCP extends Thread {
 
@@ -71,6 +73,16 @@ public class SneakerRouterTCP extends Thread {
         SneakerRequestDto request = objectMapper.readValue(jsonRequest,SneakerRequestDto.class);
         sneakerService.save(request);
 
+        success = true;
+      }
+
+      if(endpoint.matches("^get/sneakers\\?\\w+=\\w+$")) {
+        Map<String, String> queryParams = RoutingUtils.getQueryParams(endpoint);
+        List<SneakerResponseDto> sneakerList = sneakerService.findByQueryParam(queryParams);
+        String jsonResponse = objectMapper.writeValueAsString(sneakerList);
+
+        //write response
+        outputWriter.println(jsonResponse);
         success = true;
       }
 

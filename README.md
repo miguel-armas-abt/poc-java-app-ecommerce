@@ -28,6 +28,13 @@
 > ```bash
 > echo post/sneakers/eyJicmFuZCI6IlB1bWJhIiwicHJpY2UiOjY5Ljk5LCJxdWFsaWZpY2F0aW9uIjoxLCJwcm92aWRlciI6Ik1hcmtldHBsYWNlIiwiZ2VuZGVyIjoiSG9tYnJlIiwic2l6ZSI6NDQsInR5cGUiOiJVcmJhbmEifQ== | ncat localhost 8081
 > ```
+> ---
+>
+> #### Consultar productos por query param: `get/sneakers?{key}={value}`
+> ```bash
+> echo get/sneakers?provider=Tottus | ncat localhost 8081
+> ```
+>
 
 > ## ⚙️ Tecnologías
 > - `Lombok`: Simplifica la escritura de código repetitivo.
