@@ -6,7 +6,7 @@ import com.demo.poc.commons.properties.PropertiesReader;
 import com.demo.poc.dao.SneakerDao;
 import com.demo.poc.dao.SneakerDaoImpl;
 import com.demo.poc.router.ConnectionServer;
-import com.demo.poc.router.UbigeoRouterTCP;
+import com.demo.poc.router.SneakerRouterTCP;
 import com.demo.poc.service.SneakerService;
 import com.demo.poc.service.SneakerServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +24,7 @@ public class ComponentInjectorConfig extends AbstractModule {
         bind(SneakerDao.class).to(SneakerDaoImpl.class);
         bind(SneakerService.class).to(SneakerServiceImpl.class);
         bind(ObjectMapper.class);
-        bind(UbigeoRouterTCP.class);
+        bind(SneakerRouterTCP.class);
         bind(ServerSocket.class).toProvider(ServerSocketProvider.class);
         bind(ConnectionServer.class);
     }

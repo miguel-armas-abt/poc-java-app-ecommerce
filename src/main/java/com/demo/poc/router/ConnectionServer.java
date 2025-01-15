@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConnectionServer {
 
-  private final Provider<UbigeoRouterTCP> tcpRouterProvider;
+  private final Provider<SneakerRouterTCP> tcpRouterProvider;
   private final ServerSocket serverSocket;
 
   @Inject
-  public ConnectionServer(Provider<UbigeoRouterTCP> tcpRouterProvider,
+  public ConnectionServer(Provider<SneakerRouterTCP> tcpRouterProvider,
                           ServerSocket serverSocket) {
     this.tcpRouterProvider = tcpRouterProvider;
     this.serverSocket = serverSocket;
@@ -24,7 +24,7 @@ public class ConnectionServer {
     Socket socket;
     while (true) {
       socket = serverSocket.accept();
-      UbigeoRouterTCP router = tcpRouterProvider.get();
+      SneakerRouterTCP router = tcpRouterProvider.get();
       router.setSocket(socket);
       router.start();
       log.info("A new connection was detected");

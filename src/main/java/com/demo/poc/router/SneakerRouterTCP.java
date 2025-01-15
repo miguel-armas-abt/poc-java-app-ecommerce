@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.util.Base64;
 import java.util.List;
 
-public class UbigeoRouterTCP extends Thread {
+public class SneakerRouterTCP extends Thread {
 
   private final ObjectMapper objectMapper;
   private final SneakerService sneakerService;
@@ -20,7 +20,7 @@ public class UbigeoRouterTCP extends Thread {
   private Socket socket;
 
   @Inject
-  public UbigeoRouterTCP(ObjectMapper objectMapper, SneakerService sneakerService) {
+  public SneakerRouterTCP(ObjectMapper objectMapper, SneakerService sneakerService) {
     this.objectMapper = objectMapper;
     this.sneakerService = sneakerService;
   }
