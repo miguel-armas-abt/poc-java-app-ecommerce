@@ -48,6 +48,7 @@ public class SneakerServiceImpl implements SneakerService {
     return findAll()
         .stream()
         .filter(sneaker -> queryParam.containsKey("provider") ? queryParam.get("provider").equals(sneaker.getProvider()) : true)
+        .filter(sneaker -> queryParam.containsKey("gender") ? queryParam.get("gender").equals(sneaker.getGender()) : true)
         .toList();
   }
 }
