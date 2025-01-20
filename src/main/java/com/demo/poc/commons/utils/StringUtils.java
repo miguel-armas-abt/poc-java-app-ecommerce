@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
 
-    public static boolean isEmptyOrEquals(String baseField, String comparedField) {
-        return isEmpty(baseField) || baseField.equals(comparedField);
+    public static boolean isNotEmptyAndEquals(String baseField, String comparedField) {
+        return !isEmpty(baseField) && baseField.equals(comparedField);
     }
 
     private static boolean isEmpty(String field) {

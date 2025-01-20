@@ -53,8 +53,8 @@ public class SneakerServiceImpl implements SneakerService {
 
     return findAll()
         .stream()
-        .filter(sneaker -> StringUtils.isEmptyOrEquals(provider, sneaker.getProvider()))
-        .filter(sneaker -> StringUtils.isEmptyOrEquals(gender, sneaker.getGender()))
+        .filter(sneaker -> StringUtils.isNotEmptyAndEquals(provider, sneaker.getProvider()))
+        .filter(sneaker -> StringUtils.isNotEmptyAndEquals(gender, sneaker.getGender()))
         .toList();
   }
 }
