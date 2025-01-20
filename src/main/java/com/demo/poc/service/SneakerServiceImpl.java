@@ -1,5 +1,6 @@
 package com.demo.poc.service;
 
+import com.demo.poc.commons.utils.StringUtils;
 import com.demo.poc.dao.SneakerDao;
 import com.demo.poc.dto.SneakerRequestDto;
 import com.demo.poc.dto.SneakerResponseDto;
@@ -8,6 +9,8 @@ import com.demo.poc.mapper.SneakerMapper;
 import com.google.inject.Inject;
 import java.util.List;
 import java.util.Map;
+
+import static com.demo.poc.commons.constants.Constant.EMPTY;
 
 public class SneakerServiceImpl implements SneakerService {
 
@@ -45,10 +48,13 @@ public class SneakerServiceImpl implements SneakerService {
 
   @Override
   public List<SneakerResponseDto> findByQueryParam(Map<String, String> queryParam) {
+    String provider = queryParam.getOrDefault("provider", EMPTY);
+    String gender = queryParam.getOrDefault("gender", EMPTY);
+
     return findAll()
         .stream()
-        .filter(sneaker -> queryParam.containsKey("provider") ? queryParam.get("provider").equals(sneaker.getProvider()) : true)
-        .filter(sneaker -> queryParam.containsKey("gender") ? queryParam.get("gender").equals(sneaker.getGender()) : true)
+        .filter(sneaker -> StringUtils.isEmptyOrEquals(provider, sneaker.getProvider()))
+        .filter(sneaker -> StringUtils.isEmptyOrEquals(gender, sneaker.getGender()))
         .toList();
   }
 }
