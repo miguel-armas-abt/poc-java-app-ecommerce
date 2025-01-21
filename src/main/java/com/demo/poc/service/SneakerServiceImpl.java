@@ -1,5 +1,6 @@
 package com.demo.poc.service;
 
+import com.demo.poc.commons.properties.PropertiesReader;
 import com.demo.poc.commons.utils.StringUtils;
 import com.demo.poc.dao.SneakerDao;
 import com.demo.poc.dto.SneakerRequestDto;
@@ -52,12 +53,17 @@ public class SneakerServiceImpl implements SneakerService {
     String provider = queryParam.getOrDefault("provider", EMPTY);
     String gender = queryParam.getOrDefault("gender", EMPTY);
     String qualification = queryParam.getOrDefault("qualification", EMPTY);
+    String priceGreaterThan = queryParam.getOrDefault("priceGreaterThan", EMPTY);
+
+    boolean isEnableFilterByProvider = Boolean.parseBoolean(PropertiesReader.getProperty("filter.provider.enabled"));
+    boolean isEnableFilterByGender = Boolean.parseBoolean(PropertiesReader.getProperty("filter.gender.enabled"));
 
     return findAll()
         .stream()
-        .filter(sneaker -> isEmpty(provider) ? true : provider.equals(sneaker.getProvider()))
-        .filter(sneaker -> isEmpty(gender) ? true : gender.equals(sneaker.getGender()))
+        .filter(sneaker -> (isEmpty(provider) || !isEnableFilterByProvider) ? true : provider.equals(sneaker.getProvider()))
+        .filter(sneaker -> (isEmpty(gender) || !isEnableFilterByGender) ? true : gender.equals(sneaker.getGender()))
         .filter(sneaker -> isEmpty(qualification) ? true : qualification.equals(String.valueOf(sneaker.getQualification())))
+        .filter(sneaker -> isEmpty(priceGreaterThan) ? true : sneaker.getPrice() > Double.parseDouble(priceGreaterThan))
         .toList();
   }
 }
