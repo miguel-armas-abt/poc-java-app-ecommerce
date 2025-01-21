@@ -54,6 +54,7 @@ public class SneakerServiceImpl implements SneakerService {
     String gender = queryParam.getOrDefault("gender", EMPTY);
     String qualification = queryParam.getOrDefault("qualification", EMPTY);
     String priceGreaterThan = queryParam.getOrDefault("priceGreaterThan", EMPTY);
+    String sizeLessThan = queryParam.getOrDefault("sizeLessThan", EMPTY);
 
     boolean isEnableFilterByProvider = Boolean.parseBoolean(PropertiesReader.getProperty("filter.provider.enabled"));
     boolean isEnableFilterByGender = Boolean.parseBoolean(PropertiesReader.getProperty("filter.gender.enabled"));
@@ -64,6 +65,7 @@ public class SneakerServiceImpl implements SneakerService {
         .filter(sneaker -> (isEmpty(gender) || !isEnableFilterByGender) ? true : gender.equals(sneaker.getGender()))
         .filter(sneaker -> isEmpty(qualification) ? true : qualification.equals(String.valueOf(sneaker.getQualification())))
         .filter(sneaker -> isEmpty(priceGreaterThan) ? true : sneaker.getPrice() > Double.parseDouble(priceGreaterThan))
+        .filter(sneaker -> isEmpty(sizeLessThan) ? true : sneaker.getSize() < Double.parseDouble(sizeLessThan))
         .toList();
   }
 }
