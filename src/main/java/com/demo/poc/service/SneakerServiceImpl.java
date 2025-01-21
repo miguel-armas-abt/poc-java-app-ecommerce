@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.demo.poc.commons.constants.Constant.EMPTY;
+import static com.demo.poc.commons.utils.StringUtils.isEmpty;
 
 public class SneakerServiceImpl implements SneakerService {
 
@@ -50,11 +51,13 @@ public class SneakerServiceImpl implements SneakerService {
   public List<SneakerResponseDto> findByQueryParam(Map<String, String> queryParam) {
     String provider = queryParam.getOrDefault("provider", EMPTY);
     String gender = queryParam.getOrDefault("gender", EMPTY);
+    String qualification = queryParam.getOrDefault("qualification", EMPTY);
 
     return findAll()
         .stream()
-        .filter(sneaker -> StringUtils.isNotEmptyAndEquals(provider, sneaker.getProvider()))
-        .filter(sneaker -> StringUtils.isNotEmptyAndEquals(gender, sneaker.getGender()))
+        .filter(sneaker -> isEmpty(provider) ? true : provider.equals(sneaker.getProvider()))
+        .filter(sneaker -> isEmpty(gender) ? true : gender.equals(sneaker.getGender()))
+        .filter(sneaker -> isEmpty(qualification) ? true : qualification.equals(String.valueOf(sneaker.getQualification())))
         .toList();
   }
 }

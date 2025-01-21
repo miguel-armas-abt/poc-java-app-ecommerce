@@ -76,7 +76,7 @@ public class SneakerRouterTCP extends Thread {
         success = true;
       }
 
-      if(endpoint.matches("^get/sneakers\\?\\w+=\\w+$")) {
+      if(endpoint.matches("^get/sneakers\\?\\w+=\\w*\\d*$")) {
         Map<String, String> queryParams = RoutingUtils.getQueryParams(endpoint);
         List<SneakerResponseDto> sneakerList = sneakerService.findByQueryParam(queryParams);
         String jsonResponse = objectMapper.writeValueAsString(sneakerList);
