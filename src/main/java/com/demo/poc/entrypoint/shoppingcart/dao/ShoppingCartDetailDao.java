@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface ShoppingCartDetailDao {
 
-  List<ShoppingCartDetailEntity> findShoppingCartDetailByShoppingCardId(Long shoppingCartId);
+  List<ShoppingCartDetailEntity> findShoppingCartDetailsByShoppingCardId(Long shoppingCartId);
 }

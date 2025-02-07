@@ -23,4 +23,13 @@ public class PropertiesReader {
     return property;
   }
 
+  public static Class<?> getPropertyClass(String property) {
+    String className = getProperty(property);
+    try {
+      return Class.forName(className);
+    } catch (ClassNotFoundException exception) {
+      throw new IllegalArgumentException("No such property class: " + exception.getMessage(), exception);
+    }
+  }
+
 }

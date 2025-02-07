@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 /**
  * Patrón de diseño Singleton, instancia una única conexión a base de datos.
  */

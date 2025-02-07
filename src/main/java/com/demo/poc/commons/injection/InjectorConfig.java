@@ -14,9 +14,14 @@ import com.demo.poc.entrypoint.products.service.impl.ProductManagementServiceImp
 import com.demo.poc.entrypoint.shoppingcart.dao.ClientDao;
 import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDao;
 import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDetailDao;
+import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDetailJoinDao;
 import com.demo.poc.entrypoint.shoppingcart.dao.impl.ClientDaoImpl;
 import com.demo.poc.entrypoint.shoppingcart.dao.impl.ShoppingCartDaoImpl;
 import com.demo.poc.entrypoint.shoppingcart.dao.impl.ShoppingCartDetailDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.dao.impl.ShoppingCartDetailJoinDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.repository.impl.ShoppingCartCompositeRepositoryImpl;
+import com.demo.poc.entrypoint.shoppingcart.repository.ShoppingCartRepository;
+import com.demo.poc.entrypoint.shoppingcart.repository.impl.ShoppingCartJoinRepositoryImpl;
 import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationService;
 import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,10 +29,12 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import java.io.IOException;
 import java.net.ServerSocket;
+
+import com.google.inject.multibindings.Multibinder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ComponentInjectorConfig extends AbstractModule {
+public class InjectorConfig extends AbstractModule {
 
     @Override
     protected void configure() {
@@ -40,6 +47,13 @@ public class ComponentInjectorConfig extends AbstractModule {
         bind(ClientDao.class).to(ClientDaoImpl.class);
         bind(ShoppingCartDao.class).to(ShoppingCartDaoImpl.class);
         bind(ShoppingCartDetailDao.class).to(ShoppingCartDetailDaoImpl.class);
+        bind(ShoppingCartDetailJoinDao.class).to(ShoppingCartDetailJoinDaoImpl.class);
+
+        Multibinder<ShoppingCartRepository> binderSet = Multibinder.newSetBinder(binder(), ShoppingCartRepository.class);
+        binderSet.addBinding().to(ShoppingCartCompositeRepositoryImpl.class);
+        binderSet.addBinding().to(ShoppingCartJoinRepositoryImpl.class);
+
+        bind(ShoppingCartRepository.class).to(ShoppingCartCompositeRepositoryImpl.class);
         bind(ShoppingCartConsultationService.class).to(ShoppingCartConsultationServiceImpl.class);
 
         bind(ObjectMapper.class);

@@ -20,7 +20,7 @@ import java.util.List;
 public class ShoppingCartDetailDaoImpl implements ShoppingCartDetailDao {
 
   @Override
-  public List<ShoppingCartDetailEntity> findShoppingCartDetailByShoppingCardId(Long shoppingCartId) {
+  public List<ShoppingCartDetailEntity> findShoppingCartDetailsByShoppingCardId(Long shoppingCartId) {
     PreparedStatement statement = null;
     ResultSet result = null;
     try {

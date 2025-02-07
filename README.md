@@ -2,7 +2,7 @@
 
 ---
 
-> # ✅ Productos
+ # ✅ Enpoints para productos
 
 ### Consultar todos los productos:
 ```bash
@@ -41,31 +41,60 @@ Enviar el JSON encodeado en base 64.
 echo post/products/ew0KCSJuYW1lIjogIkF1ZMOtZm9ub3MiLA0KCSJzdG9jayI6IDE1LA0KCSJ1bml0UHJpY2UiOiAxMzkuOTksDQoJImNhdGVnb3J5IjogIlRlY2hub2xvZ3kiLA0KCSJkZXNjcmlwdGlvbiI6ICJBdWTDrWZvbm9zIGdhbWVyIg0KfQ== | ncat localhost 8081
 ```
 
-<br><br><br>
+<br>
 
-> # ✅ Carrito de compras
+# ✅ Enpoints para carrito de compras
 
 ### Consultar carrito de compras:
 ```bash
 echo get/shopping-carts?documentNumber=32165498 | ncat localhost 8081
 ```
 
+<br>
+
+# 📄 Diagrama de base de datos
+
+`products`⭤ `shopping_cars`
+- Un carrito de compra puede tener 0 o más productos.
+- Un producto puede aparecer en más de un carrito de compra.
+
+`shopping_cars`⭤ `clients`
+- Un cliente tiene un carrito de compras.
+- Un carrito de compras le pertenece a un cliente.
+
+`products`⭤ `invoices`
+- Un producto puede aparecer en 0 o muchas facturas.
+- Una factura contiene 1 o más productos.
+
+`clients`⭤ `invoices`
+- Un cliente tiene 0 o más facturas.
+- Una factura le pertenece a un cliente.
+
+<img src="diagram-database.jpg" width="900" height="400">
+
+<br>
+
+# 📄 Diagrama de procesos
+
+<img src="diagram-process.jpg" width="700" height="120">
+
 <br><br><br>
 
+# ⚙️ Tecnologías
+- `Lombok`: Simplifica la escritura de código repetitivo.
+- `Jackson`: Facilita la conversión entre objetos Java y formato JSON.
+- `Google Guice`: Ayuda a manejar la inyección de dependencias.
 
-> ## ⚙️ Tecnologías
-> - `Lombok`: Simplifica la escritura de código repetitivo.
-> - `Jackson`: Facilita la conversión entre objetos Java y formato JSON.
-> - `Google Guice`: Ayuda a manejar la inyección de dependencias.
+<br>
 
-> ## 📌 Pre requisitos
-> 
-> > ### Instalar ncat
-> > - Descargar e instalar ncat para Windows desde: https://nmap.org/download.html#windows
-> > - Añadir `ncat` a las variables de entorno.
->
-> > ### Construir artefacto
-> > ```bash
-> > mvn clean install
-> > ```
+# 📌 Pre requisitos
+
+> ### Instalar ncat
+> - Descargar e instalar ncat para Windows desde: https://nmap.org/download.html#windows
+> - Añadir `ncat` a las variables de entorno.
+
+> ### Construir artefacto
+> ```bash
+> mvn clean install
+> ```
 
