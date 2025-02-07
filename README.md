@@ -1,40 +1,57 @@
-# poc-java-app-products
+# poc-java-app-ecommerce
 
 ---
 
-> ## 📄 Endpoints
-> #### Consultar todos los productos: `get/sneakers`
-> ```bash
-> echo get/sneakers | ncat localhost 8081
-> ```
-> 
-> ---
-> 
-> #### Consultar un producto por su ID: `get/sneakers/{id}`
-> ```bash
-> echo get/sneakers/1 | ncat localhost 8081
-> ```
-> 
-> ---
-> 
-> #### Eliminar un producto por su ID: `delete/sneakers/{id}`
-> ```bash
-> echo delete/sneakers/1 | ncat localhost 8081
-> ```
->
-> ---
->
-> #### Guardar un nuevo producto: `post/sneakers/{base64JSON}`
-> ```bash
-> echo post/sneakers/eyJicmFuZCI6IlB1bWJhIiwicHJpY2UiOjY5Ljk5LCJxdWFsaWZpY2F0aW9uIjoxLCJwcm92aWRlciI6Ik1hcmtldHBsYWNlIiwiZ2VuZGVyIjoiSG9tYnJlIiwic2l6ZSI6NDQsInR5cGUiOiJVcmJhbmEifQ== | ncat localhost 8081
-> ```
-> ---
->
-> #### Consultar productos por query param: `get/sneakers?{key}={value}`
-> ```bash
-> echo get/sneakers?provider=Tottus | ncat localhost 8081
-> ```
->
+> # ✅ Productos
+
+### Consultar todos los productos:
+```bash
+echo get/products | ncat localhost 8081
+```
+
+
+### Consultar un producto por su ID:
+```bash
+echo get/products/1 | ncat localhost 8081
+```
+
+### Consultar productos por categoría:
+```bash
+echo get/products?category=Accessories | ncat localhost 8081
+```
+
+### Consultar productos con un precio menor a:
+```bash
+echo get/products?lessThanPrice=145 | ncat localhost 8081
+```
+
+### Consultar productos que incluyan la palabra:
+```bash
+echo get/products?nameMatches=phone | ncat localhost 8081
+```
+
+### Eliminar un producto por su ID:
+```bash
+echo delete/products/1 | ncat localhost 8081
+```
+
+### Guardar un nuevo producto:
+Enviar el JSON encodeado en base 64.
+```bash
+echo post/products/ew0KCSJuYW1lIjogIkF1ZMOtZm9ub3MiLA0KCSJzdG9jayI6IDE1LA0KCSJ1bml0UHJpY2UiOiAxMzkuOTksDQoJImNhdGVnb3J5IjogIlRlY2hub2xvZ3kiLA0KCSJkZXNjcmlwdGlvbiI6ICJBdWTDrWZvbm9zIGdhbWVyIg0KfQ== | ncat localhost 8081
+```
+
+<br><br><br>
+
+> # ✅ Carrito de compras
+
+### Consultar carrito de compras:
+```bash
+echo get/shopping-carts?documentNumber=32165498 | ncat localhost 8081
+```
+
+<br><br><br>
+
 
 > ## ⚙️ Tecnologías
 > - `Lombok`: Simplifica la escritura de código repetitivo.

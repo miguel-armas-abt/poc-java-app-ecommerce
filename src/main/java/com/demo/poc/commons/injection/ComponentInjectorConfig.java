@@ -3,12 +3,22 @@ package com.demo.poc.commons.injection;
 import static com.demo.poc.commons.constants.Constant.*;
 
 import com.demo.poc.commons.properties.PropertiesReader;
-import com.demo.poc.dao.SneakerDao;
-import com.demo.poc.dao.SneakerDaoImpl;
-import com.demo.poc.router.ConnectionServer;
-import com.demo.poc.router.SneakerRouterTCP;
-import com.demo.poc.service.SneakerService;
-import com.demo.poc.service.SneakerServiceImpl;
+import com.demo.poc.commons.tcp.ConnectionServer;
+import com.demo.poc.entrypoint.EcommerceRouterTCP;
+import com.demo.poc.entrypoint.products.dao.ProductDao;
+import com.demo.poc.entrypoint.products.dao.ProductDaoImpl;
+import com.demo.poc.entrypoint.products.service.ProductConsultationService;
+import com.demo.poc.entrypoint.products.service.ProductManagementService;
+import com.demo.poc.entrypoint.products.service.impl.ProductConsultationServiceImpl;
+import com.demo.poc.entrypoint.products.service.impl.ProductManagementServiceImpl;
+import com.demo.poc.entrypoint.shoppingcart.dao.ClientDao;
+import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDao;
+import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDetailDao;
+import com.demo.poc.entrypoint.shoppingcart.dao.impl.ClientDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.dao.impl.ShoppingCartDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.dao.impl.ShoppingCartDetailDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationService;
+import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
@@ -21,10 +31,19 @@ public class ComponentInjectorConfig extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(SneakerDao.class).to(SneakerDaoImpl.class);
-        bind(SneakerService.class).to(SneakerServiceImpl.class);
+        //product
+        bind(ProductDao.class).to(ProductDaoImpl.class);
+        bind(ProductConsultationService.class).to(ProductConsultationServiceImpl.class);
+        bind(ProductManagementService.class).to(ProductManagementServiceImpl.class);
+
+        //shopping cart
+        bind(ClientDao.class).to(ClientDaoImpl.class);
+        bind(ShoppingCartDao.class).to(ShoppingCartDaoImpl.class);
+        bind(ShoppingCartDetailDao.class).to(ShoppingCartDetailDaoImpl.class);
+        bind(ShoppingCartConsultationService.class).to(ShoppingCartConsultationServiceImpl.class);
+
         bind(ObjectMapper.class);
-        bind(SneakerRouterTCP.class);
+        bind(EcommerceRouterTCP.class);
         bind(ServerSocket.class).toProvider(ServerSocketProvider.class);
         bind(ConnectionServer.class);
     }
