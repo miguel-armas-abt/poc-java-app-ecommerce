@@ -51,8 +51,9 @@ echo get/shopping-carts?documentNumber=32165498 | ncat localhost 8081 | jq
 ```
 
 ### Añadir producto al carrito de compras:
+Enviar el JSON encodeado en base 64.
 ```bash
-echo post/shopping-carts/add-product/ewoJImRvY3VtZW50TnVtYmVyIjogIjg3NjU0MzIxIiwKCSJwcm9kdWN0SWQiOiAxLAoJInF1YW50aXR5IjogNAp9 | ncat localhost 8081
+echo post/shopping-carts/add-product/ewoJImNsaWVudCI6IHsKCQkiZG9jdW1lbnROdW1iZXIiIDogIjEyMzQ1Njc4IiwKCQkiZG9jdW1lbnRUeXBlIiA6ICIiCgl9LAoJInByb2R1Y3QiOiB7CgkJImlkIjogNSwKCQkicXVhbnRpdHkiOiA3Cgl9Cn0= | ncat localhost 8081
 ```
 
 <br>
@@ -95,8 +96,16 @@ echo post/shopping-carts/add-product/ewoJImRvY3VtZW50TnVtYmVyIjogIjg3NjU0MzIxIiw
 # 📌 Pre requisitos
 
 > ### Instalar ncat
+> Esta herramienta permitirá ejecutar peticiones con TCP.
 > - Descargar e instalar ncat para Windows desde: https://nmap.org/download.html#windows
 > - Añadir `ncat` a las variables de entorno.
+
+> ### Instalar jq
+> Esta herramienta dará formato a las respuestas JSON.
+> ```shell
+> choco install jq
+> ```
+
 
 > ### Construir artefacto
 > ```bash

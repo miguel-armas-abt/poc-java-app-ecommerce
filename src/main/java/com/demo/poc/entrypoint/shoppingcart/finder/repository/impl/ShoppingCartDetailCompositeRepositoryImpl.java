@@ -32,8 +32,8 @@ public class ShoppingCartDetailCompositeRepositoryImpl implements ShoppingCartDe
   }
 
   @Override
-  public List<ShoppingCartDetailDto> findByClientDocument(String documentNumber) {
-    return findShoppingCartDetailByClientDocument(documentNumber)
+  public List<ShoppingCartDetailDto> findAsDtoByClientDocument(String documentNumber) {
+    return findAsEntityByClientDocument(documentNumber)
         .stream()
         .map(detailEntity -> Optional.ofNullable(productFinderService.findById(detailEntity.getProductId()))
             .map(product -> ShoppingCartFinderMapper.toShoppingCartDetailDto(product, detailEntity.getQuantity()))
@@ -42,7 +42,8 @@ public class ShoppingCartDetailCompositeRepositoryImpl implements ShoppingCartDe
         .toList();
   }
 
-  private List<ShoppingCartDetailEntity> findShoppingCartDetailByClientDocument(String documentNumber) {
+  @Override
+  public List<ShoppingCartDetailEntity> findAsEntityByClientDocument(String documentNumber) {
     return Optional.ofNullable(clientQueryDao.findByDocumentNumber(documentNumber))
         .map(client -> shoppingCartQueryDao.findByClientId(client.getId()))
         .map(shoppingCart -> shoppingCartDetailQueryDao.findByShoppingCardId(shoppingCart.getId()))

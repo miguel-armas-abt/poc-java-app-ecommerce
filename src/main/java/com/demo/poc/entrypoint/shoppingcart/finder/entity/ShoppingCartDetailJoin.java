@@ -18,4 +18,5 @@ public class ShoppingCartDetailJoin implements Serializable {
   private String productName;
   private int quantity;
   private Double unitPrice;
+  private Long shoppingCartId;
 }

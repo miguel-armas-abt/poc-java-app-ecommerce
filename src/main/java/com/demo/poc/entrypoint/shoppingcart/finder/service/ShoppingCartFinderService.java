@@ -4,5 +4,5 @@ import com.demo.poc.entrypoint.shoppingcart.finder.dto.ShoppingCartDetailRespons
 
 public interface ShoppingCartFinderService {
 
-  ShoppingCartDetailResponseDto retrieveShoppingCartDetailByClientDocumentNumber(String documentNumber);
+  ShoppingCartDetailResponseDto retrieveDetailByClientDocument(String documentNumber);
 }

@@ -43,4 +43,33 @@ public class ShoppingCartDetailCommandDaoImpl implements ShoppingCartDetailComma
       closeResource(statement);
     }
   }
+
+  @Override
+  public void updateProduct(ShoppingCartDetailEntity shoppingCartDetail) {
+    Connection connection = null;
+    PreparedStatement statement = null;
+    try {
+      connection = MySQLConnection.getConnection();
+      connection.setAutoCommit(false);
+
+      String sqlStatement = "UPDATE products_shopping_carts SET quantity = ? WHERE product_id = ? AND shopping_cart_id = ?";
+      statement = connection.prepareStatement(sqlStatement);
+      statement.setInt(1, shoppingCartDetail.getQuantity());
+      statement.setLong(2, shoppingCartDetail.getProductId());
+      statement.setLong(3, shoppingCartDetail.getShoppingCartId());
+
+      int updatedRows = statement.executeUpdate();
+      log.info(PURPLE + sqlStatement + RESET);
+
+      if (updatedRows != 1)
+        throw new RuntimeException("Error to save element");
+
+      connection.commit();
+
+    } catch (SQLException exception) {
+      rollback(connection);
+    } finally {
+      closeResource(statement);
+    }
+  }
 }

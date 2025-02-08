@@ -15,14 +15,15 @@ public class ShoppingCartFinderServiceImpl implements ShoppingCartFinderService 
   }
 
   @Override
-  public ShoppingCartDetailResponseDto retrieveShoppingCartDetailByClientDocumentNumber(String documentNumber) {
+  public ShoppingCartDetailResponseDto retrieveDetailByClientDocument(String documentNumber) {
     ShoppingCartDetailResponseDto baseResponse = ShoppingCartDetailResponseDto.builder()
         .details(new ArrayList<>())
         .total(0.0)
         .build();
 
-    return shoppingCartRepository.selectRepository()
-        .findByClientDocument(documentNumber)
+    return shoppingCartRepository
+        .selectRepository()
+        .findAsDtoByClientDocument(documentNumber)
         .stream()
         .reduce(baseResponse, (modifiedResponse, detail) -> {
           modifiedResponse.getDetails().add(detail);

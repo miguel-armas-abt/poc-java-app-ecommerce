@@ -84,44 +84,44 @@ INSERT INTO products (name, stock, price, category, description, enabled) VALUES
 
 -- Insert sample data for 'shopping_cart'
 INSERT INTO shopping_carts (client_id) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6);
+(1), -- Elon Musk's cart
+(2), -- Mark Zuckerberg's cart
+(3), -- Linus Torvalds's cart
+(4), -- Freddy Vega's cart
+(5), -- Sam Altman's cart
+(6); -- Bill Gates's cart
 
 -- Insert sample data for 'products_shopping_cart' (Different clients with different products)
 INSERT INTO products_shopping_carts (product_id, shopping_cart_id, quantity) VALUES
-(1, 1, 1), -- John has 1 iPhone 14
-(3, 1, 1), -- John also has 1 MacBook Air
-(5, 2, 2), -- Alice has 2 Sony WH-1000XM5
-(6, 2, 1), -- Alice also has 1 AirPods Pro
-(2, 3, 1), -- Bob has 1 Samsung Galaxy S23
-(4, 3, 1), -- Bob also has 1 Dell XPS 13
-(8, 4, 3), -- Emma has 3 Mechanical Keyboards
-(7, 5, 1), -- Charlie has 1 Logitech MX Master 3
-(9, 6, 2), -- Olivia has 2 Samsung 4K Monitors
-(10, 6, 4); -- Olivia also has 4 USB-C Hubs
+(1, 1, 1), -- Elon Musk: 1 iPhone 14
+(3, 1, 1), -- Elon Musk: 1 MacBook Air
+(5, 2, 2), -- Mark Zuckerberg: 2 Sony WH-1000XM5
+(6, 2, 1), -- Mark Zuckerberg: 1 AirPods Pro
+(2, 3, 1), -- Linus Torvalds: 1 Samsung Galaxy S23
+(4, 3, 1), -- Linus Torvalds: 1 Dell XPS 13
+(8, 4, 3), -- Freddy Vega: 3 Mechanical Keyboards
+(7, 5, 1), -- Sam Altman: 1 Logitech MX Master 3
+(9, 6, 2), -- Bill Gates: 2 Samsung 4K Monitors
+(10, 6, 4); -- Bill Gates: 4 USB-C Hubs
 
 -- Insert sample data for 'invoices'
 INSERT INTO invoices (client_id) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6);
+(1), -- Elon Musk's invoice
+(2), -- Mark Zuckerberg's invoice
+(3), -- Linus Torvalds's invoice
+(4), -- Freddy Vega's invoice
+(5), -- Sam Altman's invoice
+(6); -- Bill Gates's invoice
 
 -- Insert sample data for 'products_invoices' (Different products in different invoices)
 INSERT INTO products_invoices (product_id, invoice_id, quantity, unit_price) VALUES
-(1, 1, 1, 999.00), -- John bought 1 iPhone 14
-(3, 1, 1, 1200.00), -- John bought 1 MacBook Air
-(5, 2, 2, 400.00), -- Alice bought 2 Sony WH-1000XM5
-(6, 2, 1, 250.00), -- Alice bought 1 AirPods Pro
-(2, 3, 1, 850.00), -- Bob bought 1 Samsung Galaxy S23
-(4, 3, 1, 1100.00), -- Bob bought 1 Dell XPS 13
-(8, 4, 3, 150.00), -- Emma bought 3 Mechanical Keyboards
-(7, 5, 1, 99.00), -- Charlie bought 1 Logitech MX Master 3
-(9, 6, 2, 300.00), -- Olivia bought 2 Samsung 4K Monitors
-(10, 6, 4, 40.00); -- Olivia bought 4 USB-C Hubs
+(1, 1, 1, 999.00), -- Elon Musk: Bought 1 iPhone 14
+(3, 1, 1, 1200.00), -- Elon Musk: Bought 1 MacBook Air
+(5, 2, 2, 400.00), -- Mark Zuckerberg: Bought 2 Sony WH-1000XM5
+(6, 2, 1, 250.00), -- Mark Zuckerberg: Bought 1 AirPods Pro
+(2, 3, 1, 850.00), -- Linus Torvalds: Bought 1 Samsung Galaxy S23
+(4, 3, 1, 1100.00), -- Linus Torvalds: Bought 1 Dell XPS 13
+(8, 4, 3, 150.00), -- Freddy Vega: Bought 3 Mechanical Keyboards
+(7, 5, 1, 99.00), -- Sam Altman: Bought 1 Logitech MX Master 3
+(9, 6, 2, 300.00), -- Bill Gates: Bought 2 Samsung 4K Monitors
+(10, 6, 4, 40.00); -- Bill Gates: Bought 4 USB-C Hubs

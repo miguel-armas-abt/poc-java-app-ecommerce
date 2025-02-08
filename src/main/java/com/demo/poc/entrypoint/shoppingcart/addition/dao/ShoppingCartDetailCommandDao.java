@@ -5,4 +5,6 @@ import com.demo.poc.entrypoint.shoppingcart.finder.entity.ShoppingCartDetailEnti
 public interface ShoppingCartDetailCommandDao {
 
   void addNewProductToShoppingCart(ShoppingCartDetailEntity shoppingCartDetail);
+
+  void updateProduct(ShoppingCartDetailEntity shoppingCartDetail);
 }

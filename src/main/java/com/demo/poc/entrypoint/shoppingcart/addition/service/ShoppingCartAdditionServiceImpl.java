@@ -1,26 +1,51 @@
 package com.demo.poc.entrypoint.shoppingcart.addition.service;
 
+import com.demo.poc.entrypoint.shoppingcart.addition.dao.ShoppingCartDetailCommandDao;
 import com.demo.poc.entrypoint.shoppingcart.addition.dto.ShoppingCartAdditionRequestDto;
-import com.demo.poc.entrypoint.shoppingcart.finder.repository.ShoppingCartDetailFinderRepository;
+import com.demo.poc.entrypoint.shoppingcart.addition.mapper.ShoppingCartAdditionMapper;
+import com.demo.poc.entrypoint.shoppingcart.finder.entity.ShoppingCartDetailEntity;
+import com.demo.poc.entrypoint.shoppingcart.finder.repository.ShoppingCartDetailFinderRepositoryHelper;
 import com.google.inject.Inject;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class ShoppingCartAdditionServiceImpl implements ShoppingCartAdditionService {
 
-  private final ShoppingCartDetailFinderRepository shoppingCartDetailFinderRepository;
+  private final ShoppingCartDetailFinderRepositoryHelper shoppingCartDetailFinderRepository;
+  private final ShoppingCartDetailCommandDao shoppingCartDetailCommandDao;
 
   @Inject
-  public ShoppingCartAdditionServiceImpl(ShoppingCartDetailFinderRepository shoppingCartDetailFinderRepository) {
+  public ShoppingCartAdditionServiceImpl(ShoppingCartDetailFinderRepositoryHelper shoppingCartDetailFinderRepository,
+                                         ShoppingCartDetailCommandDao shoppingCartDetailCommandDao) {
     this.shoppingCartDetailFinderRepository = shoppingCartDetailFinderRepository;
+    this.shoppingCartDetailCommandDao = shoppingCartDetailCommandDao;
   }
 
   @Override
   public void addProductToShoppingCart(ShoppingCartAdditionRequestDto shoppingCartAdditionRequest) {
-    boolean productIsPresent = shoppingCartDetailFinderRepository
-        .findByClientDocument(shoppingCartAdditionRequest.getClient().getDocumentNumber())
+    List<ShoppingCartDetailEntity> shoppingCartDetailList = shoppingCartDetailFinderRepository
+        .selectRepository()
+        .findAsEntityByClientDocument(shoppingCartAdditionRequest.getClient().getDocumentNumber());
+
+    Long shoppingCartId = Optional.of(shoppingCartDetailList)
+        .filter(details -> !details.isEmpty())
+        .map(details -> details.get(0).getShoppingCartId())
+        .orElseThrow(() -> new NoSuchElementException("No such any shoppingCartId"));
+
+    Optional<ShoppingCartDetailEntity> shoppingCartDetailOptional = shoppingCartDetailList
         .stream()
-        .anyMatch(detail -> detail.getProductId().equals(shoppingCartAdditionRequest.getProduct().getId()));
+        .filter(detail -> detail.getProductId().equals(shoppingCartAdditionRequest.getProduct().getId()))
+        .findFirst();
 
-
-
+    shoppingCartDetailOptional
+        .ifPresentOrElse(detail -> {
+              int currentQuantity = detail.getQuantity();
+              detail.setQuantity(currentQuantity + shoppingCartAdditionRequest.getProduct().getQuantity());
+              shoppingCartDetailCommandDao.updateProduct(detail);
+            },
+            () -> {
+              shoppingCartDetailCommandDao.addNewProductToShoppingCart(ShoppingCartAdditionMapper.toEntity(shoppingCartAdditionRequest, shoppingCartId));
+            });
   }
 }

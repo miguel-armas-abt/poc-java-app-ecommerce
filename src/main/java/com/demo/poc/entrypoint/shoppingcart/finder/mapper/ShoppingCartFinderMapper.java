@@ -2,6 +2,7 @@ package com.demo.poc.entrypoint.shoppingcart.finder.mapper;
 
 import com.demo.poc.entrypoint.products.finder.dto.ProductResponseDto;
 import com.demo.poc.entrypoint.shoppingcart.finder.dto.ShoppingCartDetailDto;
+import com.demo.poc.entrypoint.shoppingcart.finder.entity.ShoppingCartDetailEntity;
 import com.demo.poc.entrypoint.shoppingcart.finder.entity.ShoppingCartDetailJoin;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,14 @@ public class ShoppingCartFinderMapper {
         .quantity(detail.getQuantity())
         .unitPrice(detail.getUnitPrice())
         .subtotal(detail.getUnitPrice() * detail.getQuantity())
+        .build();
+  }
+
+  public static ShoppingCartDetailEntity toShoppingCartDetailEntity(ShoppingCartDetailJoin detail) {
+    return ShoppingCartDetailEntity.builder()
+        .productId(detail.getProductId())
+        .quantity(detail.getQuantity())
+        .shoppingCartId(detail.getShoppingCartId())
         .build();
   }
 }

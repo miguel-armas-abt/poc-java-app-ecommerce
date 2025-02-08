@@ -23,7 +23,7 @@ public class ShoppingCartDetailJoinQueryDaoImpl implements ShoppingCartDetailJoi
   private static final String JOIN_SQL_QUERY =
       """
           
-          SELECT p.id, p.name, p.price, psc.quantity
+          SELECT p.id, p.name, p.price, psc.quantity, psc.shopping_cart_id
           FROM products p
           JOIN products_shopping_carts psc ON p.id = psc.product_id
           JOIN shopping_carts sc ON psc.shopping_cart_id = sc.id
@@ -63,6 +63,7 @@ public class ShoppingCartDetailJoinQueryDaoImpl implements ShoppingCartDetailJoi
           .productName(result.getString("name"))
           .unitPrice(result.getDouble("price"))
           .quantity(result.getInt("quantity"))
+          .shoppingCartId(result.getLong("shopping_cart_id"))
           .build();
     }
   }

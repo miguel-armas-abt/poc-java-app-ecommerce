@@ -6,4 +6,6 @@ import java.util.List;
 public interface ShoppingCartDetailJoinQueryDao {
 
   List<ShoppingCartDetailJoin> findByClientDocument(String documentNumber);
+
+
 }

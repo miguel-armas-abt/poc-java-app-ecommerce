@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import java.io.*;
 import java.net.Socket;
-import java.util.Base64;
 
 public class EcommerceRouterTCP extends Thread {
 
@@ -100,7 +99,7 @@ public class EcommerceRouterTCP extends Thread {
 
       if(endpoint.matches("^get/shopping-carts\\?documentNumber=\\w*\\d*$")) {
         String documentNumber = RoutingUtils.getQueryParam(endpoint, "documentNumber");
-        String jsonResponse = objectMapper.writeValueAsString(shoppingCartFinderService.retrieveShoppingCartDetailByClientDocumentNumber(documentNumber));
+        String jsonResponse = objectMapper.writeValueAsString(shoppingCartFinderService.retrieveDetailByClientDocument(documentNumber));
         outputWriter.println(jsonResponse);
         success = true;
       }
