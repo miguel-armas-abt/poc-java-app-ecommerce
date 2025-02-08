@@ -1,5 +1,6 @@
 package com.demo.poc.commons.utils;
 
+import java.util.Base64;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,11 @@ public class RoutingUtils {
         .filter(keyAndValue -> keyAndValue[0].equalsIgnoreCase(queryParamName))
         .map(keyAndValue -> keyAndValue[1])
         .orElseThrow(() -> new IllegalArgumentException("Invalid query param " + queryParamName));
+  }
+
+  public static String getBase64DecodeBody(String base64Body) {
+    byte[] decodedBytes = Base64.getDecoder().decode(base64Body);
+    return new String(decodedBytes);
   }
 
 }

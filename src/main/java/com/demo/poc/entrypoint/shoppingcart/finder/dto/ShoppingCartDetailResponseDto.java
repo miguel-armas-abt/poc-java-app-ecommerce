@@ -1,6 +1,7 @@
-package com.demo.poc.entrypoint.shoppingcart.addition.dto;
+package com.demo.poc.entrypoint.shoppingcart.finder.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCartAdditionRequestDto implements Serializable {
+public class ShoppingCartDetailResponseDto implements Serializable {
 
-  private ClientDto client;
-  private ProductDto product;
+  private List<ShoppingCartDetailDto> details;
+
+  private Double total;
 }

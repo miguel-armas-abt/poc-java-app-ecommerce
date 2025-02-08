@@ -5,34 +5,40 @@ import static com.demo.poc.commons.constants.Constant.*;
 import com.demo.poc.commons.properties.PropertiesReader;
 import com.demo.poc.commons.tcp.ConnectionServer;
 import com.demo.poc.entrypoint.EcommerceRouterTCP;
-import com.demo.poc.entrypoint.products.consultation.dao.ProductConsultationDao;
-import com.demo.poc.entrypoint.products.consultation.dao.ProductConsultationDaoImpl;
-import com.demo.poc.entrypoint.products.consultation.service.ProductConsultationService;
-import com.demo.poc.entrypoint.products.management.dao.ProductManagementDao;
-import com.demo.poc.entrypoint.products.management.dao.ProductManagementDaoImpl;
+import com.demo.poc.entrypoint.products.finder.dao.ProductQueryDao;
+import com.demo.poc.entrypoint.products.finder.dao.ProductQueryDaoImpl;
+import com.demo.poc.entrypoint.products.finder.service.ProductFinderService;
+import com.demo.poc.entrypoint.products.management.dao.ProductCommandDao;
+import com.demo.poc.entrypoint.products.management.dao.ProductCommandDaoImpl;
 import com.demo.poc.entrypoint.products.management.service.ProductManagementService;
-import com.demo.poc.entrypoint.products.consultation.service.ProductConsultationServiceImpl;
+import com.demo.poc.entrypoint.products.finder.service.ProductFinderServiceImpl;
 import com.demo.poc.entrypoint.products.management.service.ProductManagementServiceImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.ClientDao;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.ShoppingCartDao;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.ShoppingCartDetailDao;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.ShoppingCartDetailJoinDao;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.impl.ClientDaoImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.impl.ShoppingCartDaoImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.impl.ShoppingCartDetailDaoImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.dao.impl.ShoppingCartDetailJoinDaoImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.repository.impl.ShoppingCartCompositeRepositoryImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.repository.ShoppingCartRepository;
-import com.demo.poc.entrypoint.shoppingcart.consultation.repository.impl.ShoppingCartJoinRepositoryImpl;
-import com.demo.poc.entrypoint.shoppingcart.consultation.service.ShoppingCartConsultationService;
-import com.demo.poc.entrypoint.shoppingcart.consultation.service.ShoppingCartConsultationServiceImpl;
+import com.demo.poc.entrypoint.shoppingcart.addition.dao.ShoppingCartDetailCommandDao;
+import com.demo.poc.entrypoint.shoppingcart.addition.dao.ShoppingCartDetailCommandDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.addition.repository.ShoppingCartAdditionRepository;
+import com.demo.poc.entrypoint.shoppingcart.addition.repository.ShoppingCartAdditionRepositoryImpl;
+import com.demo.poc.entrypoint.shoppingcart.addition.service.ShoppingCartAdditionService;
+import com.demo.poc.entrypoint.shoppingcart.addition.service.ShoppingCartAdditionServiceImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.ClientQueryDao;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.ShoppingCartQueryDao;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.ShoppingCartDetailQueryDao;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.ShoppingCartDetailJoinQueryDao;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.impl.ClientQueryDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.impl.ShoppingCartQueryDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.impl.ShoppingCartDetailQueryDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.dao.impl.ShoppingCartDetailJoinQueryDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.repository.ShoppingCartDetailFinderRepositoryHelper;
+import com.demo.poc.entrypoint.shoppingcart.finder.repository.impl.ShoppingCartDetailCompositeRepositoryImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.repository.ShoppingCartDetailFinderRepository;
+import com.demo.poc.entrypoint.shoppingcart.finder.repository.impl.ShoppingCartDetailJoinQueryRepositoryImpl;
+import com.demo.poc.entrypoint.shoppingcart.finder.service.ShoppingCartFinderService;
+import com.demo.poc.entrypoint.shoppingcart.finder.service.ShoppingCartFinderServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
+import com.google.inject.multibindings.Multibinder;
 import java.io.IOException;
 import java.net.ServerSocket;
-
-import com.google.inject.multibindings.Multibinder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,26 +46,32 @@ public class InjectorConfig extends AbstractModule {
 
     @Override
     protected void configure() {
-        //product consultation
-        bind(ProductConsultationDao.class).to(ProductConsultationDaoImpl.class);
-        bind(ProductConsultationService.class).to(ProductConsultationServiceImpl.class);
+        //product finder
+        bind(ProductQueryDao.class).to(ProductQueryDaoImpl.class);
+        bind(ProductFinderService.class).to(ProductFinderServiceImpl.class);
 
-        //product consultation
-        bind(ProductManagementDao.class).to(ProductManagementDaoImpl.class);
+        //product management
+        bind(ProductCommandDao.class).to(ProductCommandDaoImpl.class);
         bind(ProductManagementService.class).to(ProductManagementServiceImpl.class);
 
-        //shopping cart consultation
-        bind(ClientDao.class).to(ClientDaoImpl.class);
-        bind(ShoppingCartDao.class).to(ShoppingCartDaoImpl.class);
-        bind(ShoppingCartDetailDao.class).to(ShoppingCartDetailDaoImpl.class);
-        bind(ShoppingCartDetailJoinDao.class).to(ShoppingCartDetailJoinDaoImpl.class);
+        //shopping cart finder
+        bind(ClientQueryDao.class).to(ClientQueryDaoImpl.class);
+        bind(ShoppingCartQueryDao.class).to(ShoppingCartQueryDaoImpl.class);
+        bind(ShoppingCartDetailQueryDao.class).to(ShoppingCartDetailQueryDaoImpl.class);
+        bind(ShoppingCartDetailJoinQueryDao.class).to(ShoppingCartDetailJoinQueryDaoImpl.class);
 
-        Multibinder<ShoppingCartRepository> binderSet = Multibinder.newSetBinder(binder(), ShoppingCartRepository.class);
-        binderSet.addBinding().to(ShoppingCartCompositeRepositoryImpl.class);
-        binderSet.addBinding().to(ShoppingCartJoinRepositoryImpl.class);
+        Multibinder<ShoppingCartDetailFinderRepository> binderSet = Multibinder.newSetBinder(binder(), ShoppingCartDetailFinderRepository.class);
+        binderSet.addBinding().to(ShoppingCartDetailCompositeRepositoryImpl.class);
+        binderSet.addBinding().to(ShoppingCartDetailJoinQueryRepositoryImpl.class);
 
-        bind(ShoppingCartRepository.class).to(ShoppingCartCompositeRepositoryImpl.class);
-        bind(ShoppingCartConsultationService.class).to(ShoppingCartConsultationServiceImpl.class);
+        bind(ShoppingCartDetailFinderRepositoryHelper.class);
+        bind(ShoppingCartDetailFinderRepository.class).to(ShoppingCartDetailCompositeRepositoryImpl.class);
+        bind(ShoppingCartFinderService.class).to(ShoppingCartFinderServiceImpl.class);
+
+        //shopping cart addition
+        bind(ShoppingCartDetailCommandDao.class).to(ShoppingCartDetailCommandDaoImpl.class);
+        bind(ShoppingCartAdditionRepository.class).to(ShoppingCartAdditionRepositoryImpl.class);
+        bind(ShoppingCartAdditionService.class).to(ShoppingCartAdditionServiceImpl.class);
 
         // commons
         bind(ObjectMapper.class);

@@ -1,10 +1,10 @@
 package com.demo.poc.entrypoint.products.management.service;
 
-import com.demo.poc.entrypoint.products.management.dto.ProductToSaveRequestDto;
+import com.demo.poc.entrypoint.products.management.dto.ProductSaveRequestDto;
 
 public interface ProductManagementService {
 
-  void save(ProductToSaveRequestDto product);
+  void save(ProductSaveRequestDto product);
 
   void deleteById(Long id);
 

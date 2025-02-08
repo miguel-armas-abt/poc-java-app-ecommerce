@@ -62,12 +62,12 @@ CREATE TABLE products_invoices (
 
 -- Insert sample data for 'clients'
 INSERT INTO clients (name, document_number, document_type) VALUES
-('John Doe', '12345678', 'DNI'),
-('Alice Smith', '87654321', 'DNI'),
-('Bob Johnson', '123456789012', 'RUC'),
-('Emma Watson', '45612378', 'DNI'),
-('Charlie Brown', '78965432', 'PASSPORT'),
-('Olivia Martin', '32165498', 'DNI');
+('Elon Musk', '12345678', 'DNI'),
+('Mark Zuckerberg', '87654321', 'DNI'),
+('Linus Torvalds', '123456789012', 'RUC'),
+('Freddy Vega', '45612378', 'DNI'),
+('Sam Altman', '78965432', 'PASSPORT'),
+('Bill Gates', '32165498', 'DNI');
 
 -- Insert sample data for 'products' (Real product names)
 INSERT INTO products (name, stock, price, category, description, enabled) VALUES

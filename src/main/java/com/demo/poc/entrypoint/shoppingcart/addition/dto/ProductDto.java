@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCartAdditionRequestDto implements Serializable {
+public class ProductDto implements Serializable {
 
-  private ClientDto client;
-  private ProductDto product;
+  private Long id;
+  private int quantity;
 }

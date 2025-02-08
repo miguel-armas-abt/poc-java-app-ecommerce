@@ -1,22 +1,22 @@
 package com.demo.poc.entrypoint.products.management.service;
 
-import com.demo.poc.entrypoint.products.consultation.entity.ProductEntity;
-import com.demo.poc.entrypoint.products.management.dto.ProductToSaveRequestDto;
+import com.demo.poc.entrypoint.products.finder.entity.ProductEntity;
+import com.demo.poc.entrypoint.products.management.dto.ProductSaveRequestDto;
 import com.demo.poc.entrypoint.products.management.mapper.ProductManagementMapper;
-import com.demo.poc.entrypoint.products.management.dao.ProductManagementDao;
+import com.demo.poc.entrypoint.products.management.dao.ProductCommandDao;
 import com.google.inject.Inject;
 
 public class ProductManagementServiceImpl implements ProductManagementService {
 
-  private final ProductManagementDao managementDao;
+  private final ProductCommandDao managementDao;
 
   @Inject
-  public ProductManagementServiceImpl(ProductManagementDao managementDao) {
+  public ProductManagementServiceImpl(ProductCommandDao managementDao) {
     this.managementDao = managementDao;
   }
 
   @Override
-  public void save(ProductToSaveRequestDto product) {
+  public void save(ProductSaveRequestDto product) {
     ProductEntity entity = ProductManagementMapper.toEntityWithoutId(product);
     managementDao.save(entity);
   }

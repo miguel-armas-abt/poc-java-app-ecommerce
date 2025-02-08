@@ -6,28 +6,28 @@
 
 ### Consultar todos los productos:
 ```bash
-echo get/products | ncat localhost 8081
+echo get/products | ncat localhost 8081 | jq
 ```
 
 
 ### Consultar un producto por su ID:
 ```bash
-echo get/products/1 | ncat localhost 8081
+echo get/products/1 | ncat localhost 8081 | jq
 ```
 
 ### Consultar productos por categoría:
 ```bash
-echo get/products?category=Accessories | ncat localhost 8081
+echo get/products?category=Accessories | ncat localhost 8081 | jq
 ```
 
 ### Consultar productos con un precio menor a:
 ```bash
-echo get/products?lessThanPrice=145 | ncat localhost 8081
+echo get/products?lessThanPrice=145 | ncat localhost 8081 | jq
 ```
 
 ### Consultar productos que incluyan la palabra:
 ```bash
-echo get/products?nameMatches=phone | ncat localhost 8081
+echo get/products?nameMatches=phone | ncat localhost 8081 | jq
 ```
 
 ### Eliminar un producto por su ID:
@@ -47,7 +47,12 @@ echo post/products/ew0KCSJuYW1lIjogIkF1ZMOtZm9ub3MiLA0KCSJzdG9jayI6IDE1LA0KCSJ1b
 
 ### Consultar carrito de compras:
 ```bash
-echo get/shopping-carts?documentNumber=32165498 | ncat localhost 8081
+echo get/shopping-carts?documentNumber=32165498 | ncat localhost 8081 | jq
+```
+
+### Añadir producto al carrito de compras:
+```bash
+echo post/shopping-carts/add-product/ewoJImRvY3VtZW50TnVtYmVyIjogIjg3NjU0MzIxIiwKCSJwcm9kdWN0SWQiOiAxLAoJInF1YW50aXR5IjogNAp9 | ncat localhost 8081
 ```
 
 <br>
