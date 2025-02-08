@@ -23,7 +23,7 @@ import com.demo.poc.entrypoint.shoppingcart.repository.impl.ShoppingCartComposit
 import com.demo.poc.entrypoint.shoppingcart.repository.ShoppingCartRepository;
 import com.demo.poc.entrypoint.shoppingcart.repository.impl.ShoppingCartJoinRepositoryImpl;
 import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationService;
-import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationServiceImpl;
+import com.demo.poc.entrypoint.shoppingcart.service.impl.ShoppingCartConsultationServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;

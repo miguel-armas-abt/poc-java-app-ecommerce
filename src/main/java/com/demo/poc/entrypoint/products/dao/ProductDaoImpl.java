@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,7 +36,7 @@ public class ProductDaoImpl implements ProductDao {
 
       List<ProductEntity> productList = new ArrayList<>();
       while (result.next()) {
-        ProductEntity productEntity = ProductConsultationMapper.toEntity(result);
+        ProductEntity productEntity = ProductDaoMapper.toEntity(result);
         productList.add(productEntity);
       }
       return productList;
@@ -59,7 +61,7 @@ public class ProductDaoImpl implements ProductDao {
 
       List<ProductEntity> productList = new ArrayList<>();
       while (result.next()) {
-        ProductEntity product = ProductConsultationMapper.toEntity(result);
+        ProductEntity product = ProductDaoMapper.toEntity(result);
         productList.add(product);
       }
       return productList;
@@ -84,7 +86,7 @@ public class ProductDaoImpl implements ProductDao {
 
       List<ProductEntity> productList = new ArrayList<>();
       while (result.next()) {
-        ProductEntity productEntity = ProductConsultationMapper.toEntity(result);
+        ProductEntity productEntity = ProductDaoMapper.toEntity(result);
         productList.add(productEntity);
       }
       return productList;
@@ -109,7 +111,7 @@ public class ProductDaoImpl implements ProductDao {
 
       List<ProductEntity> productList = new ArrayList<>();
       while (result.next()) {
-        ProductEntity productEntity = ProductConsultationMapper.toEntity(result);
+        ProductEntity productEntity = ProductDaoMapper.toEntity(result);
         productList.add(productEntity);
       }
       return productList;
@@ -134,7 +136,7 @@ public class ProductDaoImpl implements ProductDao {
 
       ProductEntity product = null;
       if (result.next())
-        product = ProductConsultationMapper.toEntity(result);
+        product = ProductDaoMapper.toEntity(result);
 
       return product;
 
@@ -202,5 +204,22 @@ public class ProductDaoImpl implements ProductDao {
     } finally {
       closeResource(statement);
     }
+  }
+
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  private static class ProductDaoMapper {
+
+    public static ProductEntity toEntity(ResultSet result) throws SQLException {
+      return ProductEntity.builder()
+          .id(result.getLong("id"))
+          .name(result.getString("name"))
+          .stock(result.getInt("stock"))
+          .unitPrice(result.getDouble("price"))
+          .category(result.getString("category"))
+          .description(result.getString("description"))
+          .enabled(result.getBoolean("enabled"))
+          .build();
+    }
+
   }
 }

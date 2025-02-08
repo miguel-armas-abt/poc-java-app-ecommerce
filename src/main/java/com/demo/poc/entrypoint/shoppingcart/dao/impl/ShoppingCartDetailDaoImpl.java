@@ -7,7 +7,8 @@ import static com.demo.poc.commons.sql.SQLResourceHelper.closeResources;
 import com.demo.poc.commons.sql.MySQLConnection;
 import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDetailDao;
 import com.demo.poc.entrypoint.shoppingcart.entity.ShoppingCartDetailEntity;
-import com.demo.poc.entrypoint.shoppingcart.mapper.ShoppingCartDetailMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +34,7 @@ public class ShoppingCartDetailDaoImpl implements ShoppingCartDetailDao {
 
       List<ShoppingCartDetailEntity> summaryList = new ArrayList<>();
       while (result.next()) {
-        ShoppingCartDetailEntity summary = ShoppingCartDetailMapper.toEntity(result);
+        ShoppingCartDetailEntity summary = ShoppingCartDetailDaoMapper.toEntity(result);
         summaryList.add(summary);
       }
       return summaryList;
@@ -41,6 +42,18 @@ public class ShoppingCartDetailDaoImpl implements ShoppingCartDetailDao {
       throw new RuntimeException("Error to find elements: " + exception.getMessage(), exception);
     } finally {
       closeResources(statement, result);
+    }
+  }
+
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  private static class ShoppingCartDetailDaoMapper {
+
+    public static ShoppingCartDetailEntity toEntity(ResultSet result) throws SQLException {
+      return ShoppingCartDetailEntity.builder()
+          .productId(result.getLong("product_id"))
+          .shoppingCartId(result.getLong("shopping_cart_id"))
+          .quantity(result.getInt("quantity"))
+          .build();
     }
   }
 

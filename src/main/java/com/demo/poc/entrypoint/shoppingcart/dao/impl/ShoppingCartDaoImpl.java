@@ -7,7 +7,8 @@ import static com.demo.poc.commons.sql.SQLResourceHelper.closeResources;
 import com.demo.poc.commons.sql.MySQLConnection;
 import com.demo.poc.entrypoint.shoppingcart.dao.ShoppingCartDao;
 import com.demo.poc.entrypoint.shoppingcart.entity.ShoppingCartEntity;
-import com.demo.poc.entrypoint.shoppingcart.mapper.ShoppingCartMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
       ShoppingCartEntity shoppingCart = null;
       if (result.next())
-        shoppingCart = ShoppingCartMapper.toEntity(result);
+        shoppingCart = ShoppingCartDaoMapper.toEntity(result);
 
       return shoppingCart;
 
@@ -39,6 +40,17 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
       throw new RuntimeException("Error to find element: " + exception.getMessage(), exception);
     } finally {
       closeResources(statement, result);
+    }
+  }
+
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  private static class ShoppingCartDaoMapper {
+
+    public static ShoppingCartEntity toEntity(ResultSet result) throws SQLException {
+      return ShoppingCartEntity.builder()
+          .id(result.getLong("id"))
+          .clientId(result.getLong("client_id"))
+          .build();
     }
   }
 }

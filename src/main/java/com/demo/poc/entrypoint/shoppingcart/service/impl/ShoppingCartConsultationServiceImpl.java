@@ -1,8 +1,9 @@
-package com.demo.poc.entrypoint.shoppingcart.service;
+package com.demo.poc.entrypoint.shoppingcart.service.impl;
 
 import com.demo.poc.commons.properties.PropertiesReader;
 import com.demo.poc.entrypoint.shoppingcart.dto.ShoppingCartDetailResponseDto;
 import com.demo.poc.entrypoint.shoppingcart.repository.ShoppingCartRepository;
+import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationService;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;

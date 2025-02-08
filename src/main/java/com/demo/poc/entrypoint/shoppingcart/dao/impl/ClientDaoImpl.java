@@ -7,9 +7,9 @@ import static com.demo.poc.commons.sql.SQLResourceHelper.closeResources;
 import com.demo.poc.commons.sql.MySQLConnection;
 import com.demo.poc.entrypoint.shoppingcart.dao.ClientDao;
 import com.demo.poc.entrypoint.shoppingcart.entity.ClientEntity;
-import com.demo.poc.entrypoint.shoppingcart.mapper.ClientMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ public class ClientDaoImpl implements ClientDao {
 
       ClientEntity client = null;
       if (result.next())
-        client = ClientMapper.toEntity(result);
+        client = ClientDaoMapper.toEntity(result);
 
       return client;
 
@@ -42,4 +42,18 @@ public class ClientDaoImpl implements ClientDao {
       closeResources(statement, result);
     }
   }
+
+  @NoArgsConstructor(access = AccessLevel.PRIVATE)
+  private static class ClientDaoMapper {
+
+    public static ClientEntity toEntity(ResultSet result) throws SQLException {
+      return ClientEntity.builder()
+          .id(result.getLong("id"))
+          .name(result.getString("name"))
+          .documentNumber(result.getString("document_number"))
+          .documentType(result.getString("document_type"))
+          .build();
+    }
+  }
+
 }
