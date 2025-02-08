@@ -3,16 +3,15 @@ package com.demo.poc.entrypoint;
 import static com.demo.poc.commons.tcp.TCPResourceHelper.closeResource;
 
 import com.demo.poc.commons.utils.RoutingUtils;
-import com.demo.poc.entrypoint.products.dto.ProductToSaveRequestDto;
-import com.demo.poc.entrypoint.products.service.ProductConsultationService;
-import com.demo.poc.entrypoint.products.service.ProductManagementService;
-import com.demo.poc.entrypoint.shoppingcart.service.ShoppingCartConsultationService;
+import com.demo.poc.entrypoint.products.management.dto.ProductToSaveRequestDto;
+import com.demo.poc.entrypoint.products.consultation.service.ProductConsultationService;
+import com.demo.poc.entrypoint.products.management.service.ProductManagementService;
+import com.demo.poc.entrypoint.shoppingcart.consultation.service.ShoppingCartConsultationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import java.io.*;
 import java.net.Socket;
 import java.util.Base64;
-import java.util.Map;
 
 public class EcommerceRouterTCP extends Thread {
 
