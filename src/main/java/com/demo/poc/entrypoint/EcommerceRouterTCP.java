@@ -118,7 +118,15 @@ public class EcommerceRouterTCP extends Thread {
         shoppingCartAdditionService.addProductToShoppingCart(request);
         success = true;
       }
-      if(endpoint.matches("^delete/shopping-carts/delete-product/[a-zA-Z0-9+/=]+$")) {
+
+      if(endpoint.matches("^post/shopping-carts/add-product/[a-zA-Z0-9+/=]+$")) {
+        String jsonRequestBody = RoutingUtils.getBase64DecodeBody(endpoint.split("/")[3].trim());
+        ShoppingCartAdditionRequestDto request = objectMapper.readValue(jsonRequestBody, ShoppingCartAdditionRequestDto.class);
+        shoppingCartAdditionService.addProductToShoppingCart(request);
+        success=true;
+      }
+
+      if(endpoint.matches("^post/shopping-carts/reduce/[a-zA-Z0-9+/=]+$")) {
         String jsonRequestBody = RoutingUtils.getBase64DecodeBody(endpoint.split("/")[3].trim());
         ShoppingCartRemoveRequestDto request = objectMapper.readValue(jsonRequestBody, ShoppingCartRemoveRequestDto.class);
         shoppingCartRemoveService.removeProductToShoppingCart(request);
