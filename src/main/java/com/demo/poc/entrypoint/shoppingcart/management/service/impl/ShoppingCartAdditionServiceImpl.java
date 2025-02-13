@@ -1,8 +1,9 @@
-package com.demo.poc.entrypoint.shoppingcart.addition.service;
+package com.demo.poc.entrypoint.shoppingcart.management.service.impl;
 
-import com.demo.poc.entrypoint.shoppingcart.addition.dao.ShoppingCartDetailCommandDao;
-import com.demo.poc.entrypoint.shoppingcart.addition.dto.ShoppingCartAdditionRequestDto;
-import com.demo.poc.entrypoint.shoppingcart.addition.mapper.ShoppingCartAdditionMapper;
+import com.demo.poc.entrypoint.shoppingcart.management.dao.ShoppingCartDetailCommandDao;
+import com.demo.poc.entrypoint.shoppingcart.management.dto.ShoppingCartAdditionRequestDto;
+import com.demo.poc.entrypoint.shoppingcart.management.mapper.ShoppingCartAdditionMapper;
+import com.demo.poc.entrypoint.shoppingcart.management.service.ShoppingCartAdditionService;
 import com.demo.poc.entrypoint.shoppingcart.finder.entity.ShoppingCartDetailEntity;
 import com.demo.poc.entrypoint.shoppingcart.finder.repository.ShoppingCartDetailFinderRepositoryHelper;
 import com.google.inject.Inject;
@@ -48,4 +49,6 @@ public class ShoppingCartAdditionServiceImpl implements ShoppingCartAdditionServ
               shoppingCartDetailCommandDao.addNewProductToShoppingCart(ShoppingCartAdditionMapper.toEntity(shoppingCartAdditionRequest, shoppingCartId));
             });
   }
+
+
 }

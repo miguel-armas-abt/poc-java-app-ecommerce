@@ -3,16 +3,20 @@ package com.demo.poc.entrypoint;
 import static com.demo.poc.commons.tcp.TCPResourceHelper.closeResource;
 
 import com.demo.poc.commons.utils.RoutingUtils;
+import com.demo.poc.entrypoint.products.finder.dto.ProductResponseDto;
 import com.demo.poc.entrypoint.products.management.dto.ProductSaveRequestDto;
 import com.demo.poc.entrypoint.products.finder.service.ProductFinderService;
 import com.demo.poc.entrypoint.products.management.service.ProductManagementService;
-import com.demo.poc.entrypoint.shoppingcart.addition.dto.ShoppingCartAdditionRequestDto;
-import com.demo.poc.entrypoint.shoppingcart.addition.service.ShoppingCartAdditionService;
+import com.demo.poc.entrypoint.shoppingcart.management.dto.ShoppingCartAdditionRequestDto;
+import com.demo.poc.entrypoint.shoppingcart.management.dto.ShoppingCartRemoveRequestDto;
+import com.demo.poc.entrypoint.shoppingcart.management.service.ShoppingCartAdditionService;
 import com.demo.poc.entrypoint.shoppingcart.finder.service.ShoppingCartFinderService;
+import com.demo.poc.entrypoint.shoppingcart.management.service.ShoppingCartRemoveService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class EcommerceRouterTCP extends Thread {
 
@@ -21,6 +25,7 @@ public class EcommerceRouterTCP extends Thread {
   private final ProductManagementService productManagementService;
   private final ShoppingCartFinderService shoppingCartFinderService;
   private final ShoppingCartAdditionService shoppingCartAdditionService;
+  private final ShoppingCartRemoveService shoppingCartRemoveService;
 
   private Socket socket;
 
@@ -29,12 +34,14 @@ public class EcommerceRouterTCP extends Thread {
                             ProductFinderService productFinderService,
                             ProductManagementService productManagementService,
                             ShoppingCartFinderService shoppingCartFinderService,
-                            ShoppingCartAdditionService shoppingCartAdditionService) {
+                            ShoppingCartAdditionService shoppingCartAdditionService,
+                            ShoppingCartRemoveService shoppingCartRemoveService) {
     this.objectMapper = objectMapper;
     this.productFinderService = productFinderService;
     this.productManagementService = productManagementService;
     this.shoppingCartFinderService = shoppingCartFinderService;
     this.shoppingCartAdditionService = shoppingCartAdditionService;
+    this.shoppingCartRemoveService = shoppingCartRemoveService;
   }
 
   public void setSocket(Socket socket) {
@@ -51,7 +58,8 @@ public class EcommerceRouterTCP extends Thread {
       boolean success = false;
 
       if (endpoint.equals("get/products")) {
-        String jsonResponse = objectMapper.writeValueAsString(productFinderService.findAll());
+        List<ProductResponseDto> productList = productFinderService.findAll();
+        String jsonResponse = objectMapper.writeValueAsString(productList);
         outputWriter.println(jsonResponse);
         success = true;
       }
@@ -108,6 +116,12 @@ public class EcommerceRouterTCP extends Thread {
         String jsonRequestBody = RoutingUtils.getBase64DecodeBody(endpoint.split("/")[3].trim());
         ShoppingCartAdditionRequestDto request = objectMapper.readValue(jsonRequestBody, ShoppingCartAdditionRequestDto.class);
         shoppingCartAdditionService.addProductToShoppingCart(request);
+        success = true;
+      }
+      if(endpoint.matches("^delete/shopping-carts/delete-product/[a-zA-Z0-9+/=]+$")) {
+        String jsonRequestBody = RoutingUtils.getBase64DecodeBody(endpoint.split("/")[3].trim());
+        ShoppingCartRemoveRequestDto request = objectMapper.readValue(jsonRequestBody, ShoppingCartRemoveRequestDto.class);
+        shoppingCartRemoveService.removeProductToShoppingCart(request);
         success = true;
       }
 

@@ -1,6 +1,6 @@
-package com.demo.poc.entrypoint.shoppingcart.addition.mapper;
+package com.demo.poc.entrypoint.shoppingcart.management.mapper;
 
-import com.demo.poc.entrypoint.shoppingcart.addition.dto.ShoppingCartAdditionRequestDto;
+import com.demo.poc.entrypoint.shoppingcart.management.dto.ShoppingCartAdditionRequestDto;
 import com.demo.poc.entrypoint.shoppingcart.finder.entity.ShoppingCartDetailEntity;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -2,6 +2,7 @@ package com.demo.poc.entrypoint.products.finder.service;
 
 import com.demo.poc.entrypoint.products.finder.dao.ProductQueryDao;
 import com.demo.poc.entrypoint.products.finder.dto.ProductResponseDto;
+import com.demo.poc.entrypoint.products.finder.entity.ProductEntity;
 import com.demo.poc.entrypoint.products.finder.mapper.ProductFinderMapper;
 import com.google.inject.Inject;
 import java.util.List;
@@ -51,7 +52,8 @@ public class ProductFinderServiceImpl implements ProductFinderService {
 
   @Override
   public ProductResponseDto findById(Long id) {
-    return Optional.ofNullable(productQueryDao.findById(id))
+    ProductEntity product = productQueryDao.findById(id);
+    return Optional.ofNullable(product)
         .map(ProductFinderMapper::toResponseDto)
         .orElseThrow(() -> new NoSuchElementException("No such product with id " + id));
   }

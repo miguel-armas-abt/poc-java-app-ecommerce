@@ -1,4 +1,5 @@
 CREATE USER 'ecommerce_user'@'%' IDENTIFIED BY 'qwerty';
+CREATE USER 'ecommerce_user'@'%' IDENTIFIED BY 'qwerty';
 GRANT ALL PRIVILEGES ON *.* TO 'ecommerce_user'@'%' WITH GRANT OPTION;
 
 -- Create the database

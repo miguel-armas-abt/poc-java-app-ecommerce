@@ -13,10 +13,11 @@ import com.demo.poc.entrypoint.products.management.dao.ProductCommandDaoImpl;
 import com.demo.poc.entrypoint.products.management.service.ProductManagementService;
 import com.demo.poc.entrypoint.products.finder.service.ProductFinderServiceImpl;
 import com.demo.poc.entrypoint.products.management.service.ProductManagementServiceImpl;
-import com.demo.poc.entrypoint.shoppingcart.addition.dao.ShoppingCartDetailCommandDao;
-import com.demo.poc.entrypoint.shoppingcart.addition.dao.ShoppingCartDetailCommandDaoImpl;
-import com.demo.poc.entrypoint.shoppingcart.addition.service.ShoppingCartAdditionService;
-import com.demo.poc.entrypoint.shoppingcart.addition.service.ShoppingCartAdditionServiceImpl;
+import com.demo.poc.entrypoint.shoppingcart.management.dao.ShoppingCartDetailCommandDao;
+import com.demo.poc.entrypoint.shoppingcart.management.dao.ShoppingCartDetailCommandDaoImpl;
+import com.demo.poc.entrypoint.shoppingcart.management.service.ShoppingCartAdditionService;
+import com.demo.poc.entrypoint.shoppingcart.management.service.ShoppingCartRemoveService;
+import com.demo.poc.entrypoint.shoppingcart.management.service.impl.ShoppingCartAdditionServiceImpl;
 import com.demo.poc.entrypoint.shoppingcart.finder.dao.ClientQueryDao;
 import com.demo.poc.entrypoint.shoppingcart.finder.dao.ShoppingCartQueryDao;
 import com.demo.poc.entrypoint.shoppingcart.finder.dao.ShoppingCartDetailQueryDao;
@@ -31,6 +32,7 @@ import com.demo.poc.entrypoint.shoppingcart.finder.repository.ShoppingCartDetail
 import com.demo.poc.entrypoint.shoppingcart.finder.repository.impl.ShoppingCartDetailJoinQueryRepositoryImpl;
 import com.demo.poc.entrypoint.shoppingcart.finder.service.ShoppingCartFinderService;
 import com.demo.poc.entrypoint.shoppingcart.finder.service.ShoppingCartFinderServiceImpl;
+import com.demo.poc.entrypoint.shoppingcart.management.service.impl.ShoppingCartRemoveServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
@@ -69,6 +71,10 @@ public class InjectorConfig extends AbstractModule {
         //shopping cart addition
         bind(ShoppingCartDetailCommandDao.class).to(ShoppingCartDetailCommandDaoImpl.class);
         bind(ShoppingCartAdditionService.class).to(ShoppingCartAdditionServiceImpl.class);
+
+        //shopping cart remove
+        bind(ShoppingCartDetailCommandDao.class).to(ShoppingCartDetailCommandDaoImpl.class);
+        bind(ShoppingCartRemoveService.class).to(ShoppingCartRemoveServiceImpl.class);
 
         // commons
         bind(ObjectMapper.class);
