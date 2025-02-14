@@ -15,25 +15,25 @@ import java.sql.SQLException;
 @Slf4j
 public class ShoppingCartDetailCommandDaoImpl implements ShoppingCartDetailCommandDao {
 
+
   @Override
-  public void removeProductToShoppingCart(ShoppingCartDetailEntity shoppingCartDetail){
+  public void removeProductToShoppingCart(ShoppingCartDetailEntity shoppingCartDetail) {
     Connection connection = null;
     PreparedStatement statement = null;
     try {
       connection = MySQLConnection.getConnection();
       connection.setAutoCommit(false);
 
-      String sqlStatement = "INSERT INTO products_shopping_carts (product_id, shopping_cart_id, quantity) VALUES (?, ?, ?)";
+      String sqlStatement = "DELETE FROM products_shopping_carts WHERE product_id = ? AND shopping_cart_id = ?";
       statement = connection.prepareStatement(sqlStatement);
       statement.setLong(1, shoppingCartDetail.getProductId());
       statement.setLong(2, shoppingCartDetail.getShoppingCartId());
-      statement.setInt(3, shoppingCartDetail.getQuantity());
 
-      int insertedRows = statement.executeUpdate();
+      int deletedRows = statement.executeUpdate();
       log.info(PURPLE + sqlStatement + RESET);
 
-      if (insertedRows != 1)
-        throw new RuntimeException("Error to save element");
+      if (deletedRows == 0)
+        throw new RuntimeException("Error: No se encontró el elemento a eliminar");
 
       connection.commit();
 

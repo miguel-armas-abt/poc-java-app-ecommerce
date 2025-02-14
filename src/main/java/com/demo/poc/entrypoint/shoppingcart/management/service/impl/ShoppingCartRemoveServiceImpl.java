@@ -48,7 +48,7 @@ public class ShoppingCartRemoveServiceImpl implements ShoppingCartRemoveService 
                     int currentQuantity = detail.getQuantity();
                             int newQuantity = currentQuantity - shoppingCartRemoveRequestDto.getProduct().getQuantity();
 
-                            if (newQuantity <= 0) {
+                            if (newQuantity > 0) {
                                 detail.setQuantity(newQuantity);
                                 shoppingCartDetailCommandDao.updateProduct(detail);
                             } else {
