@@ -1,0 +1,10 @@
+{
+  "client": {
+    "documentNumber": "76543210",
+    "documentType": "DNI"
+  },
+  "product": {
+    "id": 1,
+    "quantity": 3
+  }
+}
